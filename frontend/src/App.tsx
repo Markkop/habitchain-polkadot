@@ -14,6 +14,7 @@ import { ContractData } from "./components/ContractData";
 import { myTokenModuleMyTokenAddress } from "./generated";
 import { passetHub, kusamaAssetHub, westend } from "./wagmi-config";
 import { useState, useEffect } from "react";
+import { HabitTrackerPage } from "./pages/HabitTrackerPage";
 
 function App() {
   const {
@@ -32,6 +33,9 @@ function App() {
   const { web3Auth } = useWeb3Auth();
   const { address } = useAccount();
   const chainId = useChainId();
+
+  // View state
+  const [currentView, setCurrentView] = useState<'demo' | 'habittracker'>('habittracker');
 
   // Provider readiness states
   const [providerReady, setProviderReady] = useState(false);
@@ -136,40 +140,83 @@ function App() {
 
   const loggedInView = (
     <div className="grid">
-      <div className="showcase-message">
-        <h3>
-          🎯 Interact directly with Polkadot Asset Hub - no MetaMask required!
-        </h3>
-        <p>
-          You're connected via Web3Auth. A secure key pair was generated from
-          your social login choice, enabling blockchain interactions without
-          browser wallet extensions.
-        </p>
+      {/* Navigation */}
+      <div style={{ marginBottom: '2rem', borderBottom: '2px solid #e0e0e0', paddingBottom: '1rem' }}>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <button
+            onClick={() => setCurrentView('habittracker')}
+            className={currentView === 'habittracker' ? 'card' : 'card-inactive'}
+            style={{
+              padding: '0.75rem 1.5rem',
+              fontWeight: currentView === 'habittracker' ? 'bold' : 'normal',
+              background: currentView === 'habittracker' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : '#f5f5f5',
+              color: currentView === 'habittracker' ? 'white' : '#333'
+            }}
+          >
+            ⛓️ HabitChain
+          </button>
+          <button
+            onClick={() => setCurrentView('demo')}
+            className={currentView === 'demo' ? 'card' : 'card-inactive'}
+            style={{
+              padding: '0.75rem 1.5rem',
+              fontWeight: currentView === 'demo' ? 'bold' : 'normal',
+              background: currentView === 'demo' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : '#f5f5f5',
+              color: currentView === 'demo' ? 'white' : '#333'
+            }}
+          >
+            🎮 Demo Features
+          </button>
+          <div style={{ marginLeft: 'auto', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <button onClick={handleFaucetClick} className="card faucet-button" style={{ padding: '0.5rem 1rem' }}>
+              💰 Faucet
+            </button>
+            <button onClick={() => disconnect()} className="card" style={{ padding: '0.5rem 1rem' }}>
+              🚪 Logout
+            </button>
+          </div>
+        </div>
       </div>
 
-      <h2>Connected to {connectorName}</h2>
-      <div>{address}</div>
-      <div className="flex-container">
-        <div>
-          <button onClick={() => uiConsole(userInfo)} className="card">
-            Get User Info
-          </button>
-        </div>
-        <div>
-          <button onClick={handleFaucetClick} className="card faucet-button">
-            Get Test Tokens
-          </button>
-        </div>
-        <div>
-          <button onClick={() => disconnect()} className="card">
-            Log Out
-          </button>
-          {disconnectLoading && <div className="loading">Disconnecting...</div>}
-          {disconnectError && (
-            <div className="error">{disconnectError.message}</div>
-          )}
-        </div>
-      </div>
+      {/* Main Content */}
+      {currentView === 'habittracker' && <HabitTrackerPage />}
+
+      {currentView === 'demo' && (
+        <>
+          <div className="showcase-message">
+            <h3>
+              🎯 Interact directly with Polkadot Asset Hub - no MetaMask required!
+            </h3>
+            <p>
+              You're connected via Web3Auth. A secure key pair was generated from
+              your social login choice, enabling blockchain interactions without
+              browser wallet extensions.
+            </p>
+          </div>
+
+          <h2>Connected to {connectorName}</h2>
+          <div>{address}</div>
+          <div className="flex-container">
+            <div>
+              <button onClick={() => uiConsole(userInfo)} className="card">
+                Get User Info
+              </button>
+            </div>
+            <div>
+              <button onClick={handleFaucetClick} className="card faucet-button">
+                Get Test Tokens
+              </button>
+            </div>
+            <div>
+              <button onClick={() => disconnect()} className="card">
+                Log Out
+              </button>
+              {disconnectLoading && <div className="loading">Disconnecting...</div>}
+              {disconnectError && (
+                <div className="error">{disconnectError.message}</div>
+              )}
+            </div>
+          </div>
 
       <div className="showcase-message">
         <h3>💰 Check Your Balance</h3>
@@ -208,23 +255,25 @@ function App() {
       </div>
       <SwitchChain />
 
-      <div className="showcase-message">
-        <h3>🔑 Private Key Access</h3>
-        <p>
-          Export your private key for advanced use cases while maintaining
-          security.
-        </p>
-      </div>
-      <ExportPrivateKey />
+          <div className="showcase-message">
+            <h3>🔑 Private Key Access</h3>
+            <p>
+              Export your private key for advanced use cases while maintaining
+              security.
+            </p>
+          </div>
+          <ExportPrivateKey />
 
-      {!contractAddress && (
-        <div className="contract-section">
-          <h3>Contract Not Available</h3>
-          <p>
-            Please deploy the FakeUSDT contract and update the address in
-            generated.ts
-          </p>
-        </div>
+          {!contractAddress && (
+            <div className="contract-section">
+              <h3>Contract Not Available</h3>
+              <p>
+                Please deploy the FakeUSDT contract and update the address in
+                generated.ts
+              </p>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

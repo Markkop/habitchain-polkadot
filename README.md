@@ -1,7 +1,100 @@
-# react-solidity-hardhat template
+# ⛓️ HabitChain - Gamified Habit Tracker on Polkadot
 
-This template sets up a combination of Solidity smart contracts and a React front-end app that interacts with these
-smart contracts.  
+**Build better habits with blockchain accountability!**
+
+HabitChain is a decentralized application that uses financial commitment to help you build daily habits. Stake PAS tokens, check in daily, and earn rewards for consistency.
+
+## 🚀 Quick Start
+
+**Ready to deploy? Just 3 steps:**
+
+1. **Deploy Contract**: `cd contracts && npx hardhat ignition deploy ./ignition/modules/HabitTracker.ts --network passetHubTestnet`
+2. **Update Frontend**: Replace `HABIT_TRACKER_ADDRESS` in `frontend/src/hooks/useHabitTracker.ts`
+3. **Launch**: `cd frontend && npm run dev`
+
+**See [QUICK_START.md](QUICK_START.md) for detailed instructions!**
+
+---
+
+## 📚 Documentation
+
+- **[QUICK_START.md](QUICK_START.md)** - 10-minute deployment guide ⚡
+- **[SUMMARY.md](SUMMARY.md)** - Implementation overview 📊
+- **[HABITCHAIN_README.md](HABITCHAIN_README.md)** - Complete user guide 📖
+- **[BLUEPRINT.md](BLUEPRINT.md)** - Technical architecture 🏗️
+- **[IMPLEMENTATION_COMPLETE.md](IMPLEMENTATION_COMPLETE.md)** - Implementation details 🔍
+
+---
+
+## ✨ Features
+
+- 💰 Deposit/withdraw PAS tokens
+- 📝 Create and track daily habits
+- 🚀 Daily cycle: Prepare → Check-in → Settle
+- 🏆 Earn rewards for successful check-ins
+- 💸 Lose stakes for missed check-ins
+- 📊 Beautiful, responsive UI
+- 🔐 Web3Auth social login
+- ⏰ UTC midnight deadline tracking
+
+---
+
+## 🎯 How It Works
+
+1. Create habits (10 PAS per habit per day)
+2. Prepare your day (locks funds)
+3. Check in before UTC midnight
+4. Settle yesterday (win/lose stakes)
+5. Claim your rewards
+
+---
+
+## 📦 What's Included
+
+### Smart Contracts ✅
+- `HabitTracker.sol` - Main contract (450 lines)
+- Comprehensive test suite (35+ tests)
+- Deployment scripts
+
+### Frontend ✅
+- 6 React components
+- Custom hooks for Web3
+- Responsive design
+- Real-time updates
+
+### Documentation ✅
+- User guides
+- Deployment instructions
+- Troubleshooting
+- Technical specifications
+
+---
+
+## 🛠️ Tech Stack
+
+- **Smart Contracts**: Solidity 0.8.28
+- **Development**: Hardhat + @parity/hardhat-polkadot
+- **Frontend**: React 18 + TypeScript + Vite
+- **Web3**: wagmi + viem + Web3Auth
+- **Network**: Paseo Asset Hub TestNet
+
+---
+
+## 📊 Project Status
+
+- ✅ Smart contracts implemented and tested
+- ✅ Frontend fully functional
+- ✅ Documentation complete
+- ✅ Ready for deployment
+
+**All 8 implementation tasks completed!** 🎉
+
+---
+
+# Original Template Information
+
+This project is built on the react-solidity-hardhat template which sets up a combination of Solidity smart contracts and a React front-end app that interacts with these smart contracts.
+
 This template includes:
 
 - [OpenZeppelin](https://docs.openzeppelin.com/contracts/5.x/) smart contract library.
